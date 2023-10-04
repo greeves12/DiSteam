@@ -34,7 +34,7 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Steam Authenticator for Discord</h3>
 
   <p align="center">
     Link your Steam and Discord account! (Work in progress)
