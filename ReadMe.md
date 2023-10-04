@@ -31,7 +31,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/greeves12/steam-auth-bot">
-    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fuk.m.wikipedia.org%2Fwiki%2F%25D0%25A4%25D0%25B0%25D0%25B9%25D0%25BB%3ASteam_icon_logo.svg&psig=AOvVaw1WVmY0dvvNZYQbPWX0h0ab&ust=1696494086803000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMillo7724EDFQAAAAAdAAAAABAD" alt="Logo" width="80" height="80">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Best-README-Template</h3>
