@@ -10,7 +10,15 @@
         <div class="container">
             <div class="text">
                 <h1>Link your Steam account by clicking the button below</h1>
-                <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_border.png">
+                <script type="text/javascript">
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const myParam = urlParams.get('token');
+
+                    function image(img) {
+                        window.open(`https://steam-auth-bot-production.up.railway.app/openid?token=${myParam}`);
+                    }
+                </script>
+                <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_border.png" onclick="image(this)">
                 <p>
                     Disclaimer: We use OpenID to securely verify your Steam account.
                 </p>
