@@ -18,7 +18,7 @@ public class AuthenticationController {
     * @return - Token in a string in JSON format
     * */
     @PostMapping("/auth")
-    public String createToken(@RequestParam int discord_id){
+    public String createToken(@RequestParam Integer discord_id){
         Token token = new Token();
         token.setDiscord_iD(discord_id);
 
