@@ -1,5 +1,5 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://tategreeves:Tate2603@java.jj4qui9.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp
+      uri: mongodb+srv://${USERNAME}:${PASSWORD}@java.jj4qui9.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp
       database: service

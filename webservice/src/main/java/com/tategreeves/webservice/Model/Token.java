@@ -3,7 +3,7 @@ package com.tategreeves.webservice.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "authentication")
+@Document(collection = "authentication")
 public class Token {
     @Id
     private int discord_iD;
