@@ -44,7 +44,7 @@ public class AuthenticationService {
     * @param discord_id - Unique discord id
     * @return - Message that object has been removed from the database
     * */
-    public String deleteToken(int discord_id){
+    public String deleteToken(long discord_id){
         repository.deleteById(discord_id);
         return "Entry with ID: " + discord_id + " deleted";
     }

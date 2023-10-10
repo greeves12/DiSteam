@@ -1,5 +1,5 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
-const {fetch} = require('node-fetch');
+const fetch = require('node-fetch');
 require('dotenv').config();
 
 /*
@@ -14,14 +14,14 @@ module.exports = {
     .setName("link")
     .setDescription("Link your Steam with Discord"),
     async execute (interaction){
-        fetch('', { 
+        fetch('https://steam-auth-bot-production.up.railway.app/auth', { 
             method: 'POST', 
             body: JSON.stringify({ 
-                api_key: process.env.API_KEY, 
-                id: interaction.user.id
+                discord_id: parseInt(interaction.user.id,10)
         }), 
         headers: { 
-            'Content-type': 'application/json; charset=UTF-8', 
+            'Content-type': 'application/json; charset=UTF-8',
+             api_key: process.env.API_KEY,  
         }, 
     }) 
     .then((response) => response.json()) 
