@@ -2,6 +2,7 @@ package com.tategreeves.webservice.Controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.expressme.openid.Association;
 import org.expressme.openid.Authentication;
 import org.expressme.openid.Endpoint;
@@ -12,41 +13,70 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
 
 @RestController
 public class OpenIDController {
-    static final long ONE_HOUR = 3600000L;
-    static final long TWO_HOUR = ONE_HOUR * 2L;
-    static final String ATTR_MAC = "openid_mac";
-    static final String ATTR_ALIAS = "openid_alias";
 
     @GetMapping("/openid")
-    public void createRequest(@RequestParam("token") Optional<String> token, HttpServletRequest request, HttpServletResponse response){
+    public void createRequest(@RequestParam("token") Optional<String> token, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         if(token.isPresent()) {
             OpenIdManager manager = new OpenIdManager();
 
-            manager.setRealm("https://localhost:8080/openid");
-            manager.setReturnTo("https://localhost:8080/openid?login=verify");
+            manager.setRealm("http://localhost:8080/openid");
+            manager.setReturnTo("http://localhost:8080/openid?login=verify");
 
             Endpoint endpoint = manager.lookupEndpoint("https://steamcommunity.com/openid");
             System.out.println(endpoint);
+
             Association association = manager.lookupAssociation(endpoint);
 
             String url = manager.getAuthenticationUrl(endpoint, association);
+
+            System.out.println(request.getRemoteAddr());
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute(request.getRemoteAddr(), token);
 
             try {
                 response.sendRedirect(url);
             } catch (IOException e) {
                 System.out.println("e");
             }
-        }else if(request.getParameter("login").equals("verify")){
+            return;
+        }
 
-            byte[] mac_key = (byte[]) request.getSession().getAttribute(ATTR_MAC);
-            String alias = (String) request.getSession().getAttribute(ATTR_ALIAS);
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            response.sendRedirect("http://localhost:8080/failed.html");
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            response.setDateHeader("Expires", 0);
+            return;
+        }
+
+        if(request.getParameter("login").equals("verify") && (session.getAttribute(request.getRemoteAddr())) != null){
+
             String identity = request.getParameter("openid.identity");
             response.setContentType("text/html; charset=UTF-8");
-            System.out.println(identity);
+
+            System.out.println(request.getRemoteAddr());
+            System.out.println(identity.substring(37));
+            session.invalidate();
+
+            response.sendRedirect("http://localhost:8080/success.html");
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            response.setDateHeader("Expires", 0);
+
+            return;
         }
+
+        response.sendRedirect("http://localhost:8080/failed.html");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        response.setDateHeader("Expires", 0);
     }
 }
