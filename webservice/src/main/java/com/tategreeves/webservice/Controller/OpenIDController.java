@@ -32,6 +32,12 @@ public class OpenIDController {
     public void createRequest(@RequestParam("token") Optional<String> token, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         if(token.isPresent()) {
+            String tok = token.get();
+            if(!authenticationService.getByToken(tok).isPresent()){
+                return_failed(response);
+                return;
+            }
+
             OpenIdManager manager = new OpenIdManager();
 
             manager.setRealm("http://localhost:8080/openid");
@@ -45,7 +51,7 @@ public class OpenIDController {
             String url = manager.getAuthenticationUrl(endpoint, association);
 
             HttpSession session = request.getSession(true);
-            session.setAttribute("token", token);
+            session.setAttribute("token", tok);
 
 
             try {
@@ -62,7 +68,7 @@ public class OpenIDController {
             return;
         }
 
-        if(request.getParameter("login").equals("verify") && (session.getAttribute(request.getRemoteAddr())) != null){
+        if(request.getParameter("login").equals("verify") && (session.getAttribute("token")) != null){
 
             String identity = request.getParameter("openid.identity");
             response.setContentType("text/html; charset=UTF-8");
