@@ -14,6 +14,15 @@ public class User {
     private long steam_id;
     private HashMap<Long, Integer> bans;
     private String steam_name;
+    private long ageOfAccount;
+
+    public long getAgeOfAccount() {
+        return ageOfAccount;
+    }
+
+    public void setAgeOfAccount(long ageOfAccount) {
+        this.ageOfAccount = ageOfAccount;
+    }
 
     public void setSteam_name(String steam_name){
         this.steam_name = steam_name;
