@@ -5,6 +5,7 @@ import com.tategreeves.webservice.Repository.AuthenticationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -47,5 +48,9 @@ public class AuthenticationService {
     public String deleteToken(long discord_id){
         repository.deleteById(discord_id);
         return "Entry with ID: " + discord_id + " deleted";
+    }
+
+    public Optional<Token> getByToken(String token){
+        return repository.getByToken(token);
     }
 }
