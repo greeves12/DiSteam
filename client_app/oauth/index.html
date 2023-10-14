@@ -15,7 +15,7 @@
                     const myParam = urlParams.get('token');
 
                     function image(img) {
-                        window.open(`https://steam-auth-bot-production.up.railway.app/openid?token=${myParam}`);
+                        window.location.replace(`https://steam-auth-bot-production.up.railway.app/openid?token=${myParam}`);
                     }
                 </script>
                 <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_border.png" onclick="image(this)">

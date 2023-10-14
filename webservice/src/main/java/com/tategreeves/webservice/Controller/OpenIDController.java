@@ -40,7 +40,7 @@ public class OpenIDController {
 
             OpenIdManager manager = new OpenIdManager();
 
-            manager.setRealm("DiSteam");
+            manager.setRealm("https://steam-auth-bot-production.up.railway.app/openid");
             manager.setReturnTo("https://steam-auth-bot-production.up.railway.app/openid?login=verify");
 
             Endpoint endpoint = manager.lookupEndpoint("https://steamcommunity.com/openid");
