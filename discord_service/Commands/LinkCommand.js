@@ -25,7 +25,7 @@ module.exports = {
         }, 
     }) 
     .then((response) => response.json()) 
-    .then((json) => interaction.reply({content: `Click the following URL to complete account link.\n https://link.com/openid?state=${json.token}`, ephemeral:  true})) 
+    .then((json) => interaction.reply({content: `Click the following URL to complete account link.\n https://steamlink.vercel.app/index.html?token=${json.token}`, ephemeral:  true})) 
     .catch(err => console.log(err))
     
     }
