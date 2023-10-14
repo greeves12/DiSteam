@@ -40,8 +40,8 @@ public class OpenIDController {
 
             OpenIdManager manager = new OpenIdManager();
 
-            manager.setRealm("http://localhost:8080/openid");
-            manager.setReturnTo("http://localhost:8080/openid?login=verify");
+            manager.setRealm("https://steam-auth-bot-production.up.railway.app/openid");
+            manager.setReturnTo("https://steam-auth-bot-production.up.railway.app/openid?login=verify");
 
             Endpoint endpoint = manager.lookupEndpoint("https://steamcommunity.com/openid");
             System.out.println(endpoint);
@@ -92,6 +92,7 @@ public class OpenIDController {
             user.setSteam_id(steamID);
 
             userService.add_user(user);
+            authenticationService.deleteToken(discordID);
 
             session.invalidate();
 
@@ -103,14 +104,14 @@ public class OpenIDController {
     }
 
     private void return_failed(HttpServletResponse response) throws IOException{
-        response.sendRedirect("http://localhost:8080/failed.html");
+        response.sendRedirect("https://steamlink.vercel.app/failed.html");
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         response.setDateHeader("Expires", 0);
     }
 
     private void return_success(HttpServletResponse response) throws IOException{
-        response.sendRedirect("http://localhost:8080/success.html");
+        response.sendRedirect("https://steamlink.vercel.app/success.html");
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         response.setDateHeader("Expires", 0);
