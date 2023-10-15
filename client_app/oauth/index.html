@@ -4,25 +4,38 @@
         <title>Steam Linker | Home</title>
         <meta name="viewport" content="width-device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="./resources/styles/index.css" />
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/e32cac0f81.js" crossorigin="anonymous"></script>
     </head>
+
+    <script type="text/javascript">
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('token');
+
+        function image(img) {
+            window.location.replace(`https://steam-auth-bot-production.up.railway.app/openid?token=${myParam}`);
+        }
+    </script>
+
 
     <body>
         <div class="container">
-            <div class="text">
-                <h1>Link your Steam account by clicking the button below</h1>
-                <script type="text/javascript">
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const myParam = urlParams.get('token');
+            <img src="https://icons.iconarchive.com/icons/froyoshark/enkel/512/Steam-icon.png">
+            <h1>To link your account with Discord, we fetch public information about your account from the Steam Web API <i>(this includes steamid, profile name, avatar and game list).</i></h1>
+            <h2>This website is not affiliated with Valve Corporation or Steam.</h2>
+            <button>Sign in through <i class="fa-brands fa-steam"></i> Steam</button>
 
-                    function image(img) {
-                        window.location.replace(`https://steam-auth-bot-production.up.railway.app/openid?token=${myParam}`);
-                    }
-                </script>
-                <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/steamworks_docs/english/sits_large_border.png" onclick="image(this)">
-                <p>
-                    Disclaimer: We use OpenID to securely verify your Steam account.
-                </p>
+            <div class="bottominfo">
+                <h1>How is my information handled? <span>When you click the sign in button, you are forwarded to https://steamcommunity.com, where you are able to sign in through Steam.
+                    We are not able to access usernames and passwords.</span>
+                </h1>
             </div>
+        </div>
+
+        <div class="footer">
+            <div class="col-1"></div>
+            <div class="col-`"></div>
+            <div class="col-1"></div>
         </div>
     </body>
 </html>

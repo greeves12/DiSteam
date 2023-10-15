@@ -104,12 +104,10 @@ public class OpenIDController {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
-
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(connection.getInputStream());
 
             PlayerInformation playerInformation = mapper.readValue(node.get("response").get("players").toString(), PlayerInformation[].class)[0];
-            System.out.println(playerInformation.getPersonaname());
 
             User user = new User();
             user.setTime_verified(LocalDateTime.now());
@@ -119,7 +117,7 @@ public class OpenIDController {
             user.setAgeOfAccount(playerInformation.getTimecreated());
 
             userService.add_user(user);
-            authenticationService.deleteToken(discordID);
+            authenticationService.updateVerification(newToken.get(), true);
 
             session.invalidate();
 

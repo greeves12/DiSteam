@@ -1,4 +1,4 @@
-const {Client, IntentsBitField, Collection, REST, Routes} = require('discord.js');
+const {Client, IntentsBitField, Collection, REST, Routes, ActivityType} = require('discord.js');
 require('dotenv').config();
 const fs = require('fs');
 
@@ -25,6 +25,11 @@ const rest = new REST().setToken(process.env.TOKEN);
 
 
 client.once("ready", () => {
+    client.user.setActivity({
+        name: "port 8080",
+        type: ActivityType.Listening
+    });
+
     (async () => {
         try {
             await rest.put(
