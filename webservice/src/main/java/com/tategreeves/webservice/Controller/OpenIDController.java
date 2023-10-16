@@ -121,7 +121,7 @@ public class OpenIDController {
 
             session.invalidate();
 
-            return_success(response);
+            return_success(response, playerInformation.getPersonaname());
             return;
         }
 
@@ -135,8 +135,8 @@ public class OpenIDController {
         response.setDateHeader("Expires", 0);
     }
 
-    private void return_success(HttpServletResponse response) throws IOException{
-        response.sendRedirect("https://steamlink.vercel.app/success.html");
+    private void return_success(HttpServletResponse response, String steamName) throws IOException{
+        response.sendRedirect("https://steamlink.vercel.app/success.html?username=" + steamName);
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         response.setDateHeader("Expires", 0);

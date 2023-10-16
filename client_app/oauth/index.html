@@ -12,30 +12,25 @@
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('token');
 
-        function image(img) {
+        function image() {
             window.location.replace(`https://steam-auth-bot-production.up.railway.app/openid?token=${myParam}`);
         }
     </script>
 
 
     <body>
+    
         <div class="container">
             <img src="https://icons.iconarchive.com/icons/froyoshark/enkel/512/Steam-icon.png">
             <h1>To link your account with Discord, we fetch public information about your account from the Steam Web API <i>(this includes steamid, profile name, avatar and game list).</i></h1>
             <h2>This website is not affiliated with Valve Corporation or Steam.</h2>
-            <button>Sign in through <i class="fa-brands fa-steam"></i> Steam</button>
+            <button onclick="image()">Sign in through <i class="fa-brands fa-steam"></i> Steam</button>
 
             <div class="bottominfo">
                 <h1>How is my information handled? <span>When you click the sign in button, you are forwarded to https://steamcommunity.com, where you are able to sign in through Steam.
                     We are not able to access usernames and passwords.</span>
                 </h1>
             </div>
-        </div>
-
-        <div class="footer">
-            <div class="col-1"></div>
-            <div class="col-`"></div>
-            <div class="col-1"></div>
         </div>
     </body>
 </html>

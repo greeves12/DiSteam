@@ -1,29 +1,45 @@
 body {
-    background-image: url('https://steamuserimages-a.akamaihd.net/ugc/775119523639273814/119A5E4828FACC5F55A992CB27D4A4B25DD57241/');
+    background-image: linear-gradient(to right bottom, #0e0e0f, #191819, #242222, #2d2c2a, #363634);
     display: flex;
     justify-content: center;
-    align-items: center;
     min-height: 100vh;
     text-align: center;
+    font-family: Inter,fallback-inter,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol;
 }
 
 .container {
-    background-color: black;
     padding: 0px 50px;
     color: white;
-    opacity: 85%;
-    border-radius: 40px;
+    width: 400px;
+}
+
+.container h1 {
+    font-size: 30px;
+    padding-bottom: 50px;
+    padding-top: 20px;
 }
 
 .container img{
+    margin-top: 160px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     padding-top: 20px;
-    width: 15%;
+    width: 20%;
 }
 
 .container p {
     text-align: center;
-    padding-top: 30px;
+    padding-bottom: 20px;
+    color: rgb(185, 189, 189);
+}
+
+#disclaimer {
+    padding-top: 100px;
+    font-size: 12px;
+    color: rgb(11, 245, 62);
+}
+
+span {
+    color: rgb(11, 245, 62);
 }
