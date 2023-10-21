@@ -77,9 +77,9 @@ The official repository of the DiSteam Network.
 DiSteam helps you maintain your server by mitigating cheating and smurfing (alternate accounts) by requiring members to authenticate their Steam with a Discord account. The main advantage that DiSteam gives server owners is that we act as a middle man, which means that each Discord server DiSteam is running on is connected through our central database. This means that a member only has to authenticate their Steam account once and they will be verified across the whole network. 
 
 Still not convinced? Here are some more reasons to use DiSteam:
-* DiSteam is highly flexiable and configureable, which means you can customize the service speicifically to your needs.
+* DiSteam is highly flexible and configurable, which means you can customize the service specifically to your needs.
 * You have access to the analytical dashboard, this gives you an insight to players who've been banned on other servers on the network.
-* Plug and play. You don't need a sophetiscated computer science background to use DiSteam. Just connect us to your server and sit back and relax while we take care of the administrating for you.
+* Plug and play. You don't need a sophisticated computer science background to use DiSteam. Just connect us to your server and sit back and relax while we take care of the administrating for you.
 
 So, are you ready to take your server to the next level? Head over to our website for detailed instructions on how to get setup.
 

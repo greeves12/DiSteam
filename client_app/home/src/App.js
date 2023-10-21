@@ -1,5 +1,6 @@
-import Nav from "./Naviation/navbar";
 import Header from "./Content/Header";
+import Nav from "./Naviation/navbar";
+import VideoPlayer from "./Content/VideoPlayer";
 
 const App = () => {
   return (
@@ -7,7 +8,8 @@ const App = () => {
       <div className="bg-black w-full h-screen text-white">
         <Nav />
         <Header />
-      </div>
+        <VideoPlayer />
+      </div>  
     </>
   );
 }
