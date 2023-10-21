@@ -1,10 +1,14 @@
-import navbar from "./Naviation/navbar";
+import Nav from "./Naviation/navbar";
+import Header from "./Content/Header";
 
-function App() {
+const App = () => {
   return (
-    <div className="bg-black w-full h-screen">
-      <navbar />
-    </div>
+    <>
+      <div className="bg-black w-full h-screen text-white">
+        <Nav />
+        <Header />
+      </div>
+    </>
   );
 }
 
