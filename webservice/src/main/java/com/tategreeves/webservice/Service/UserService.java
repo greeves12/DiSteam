@@ -6,6 +6,8 @@ import com.tategreeves.webservice.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -20,10 +22,7 @@ public class UserService {
         repository.save(user);
     }
 
-    public boolean user_exists(User user){
-        if(repository.findById(user.getDiscord_id()).isPresent()){
-            return true;
-        }
-        return false;
+    public Optional<User> user_exists(User user){
+        return repository.findById(user.getDiscord_id());
     }
 }

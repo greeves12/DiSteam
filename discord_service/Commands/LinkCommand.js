@@ -1,6 +1,7 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
 const fetch = require('node-fetch');
+const {buildAuthMessage, fetchServerConfig} = require('../index');
 require('dotenv').config();
 
 /*
@@ -15,40 +16,32 @@ module.exports = {
     .setName("link")
     .setDescription("Link your Steam with Discord"),
     async execute (interaction){
-        fetch('https://steam-auth-bot-production.up.railway.app/auth', { 
+        var config = await fetchServerConfig(interaction.guild.id, interaction.guild.ownerId);
+        fetch(process.env.TOKEN_LINK, { 
             method: 'POST', 
             body: JSON.stringify({ 
                 discord_id: parseInt(interaction.user.id,10)
         }), 
         headers: { 
             'Content-type': 'application/json; charset=UTF-8',
-             api_key: process.env.API_KEY,  
+             'api_key': process.env.API_KEY,  
         }, 
     }) 
     .then((response) => response.json()) 
     .then((json) => {
-        var message = "This Discord has already been registered with a Steam accocunt.";
+        var message = "This Discord has already been registered with a Steam account.";
 
         var embed = new EmbedBuilder()
         .setTitle("Sorry...")
-        .setDescription("This Discord is already associated with a Steam account. Unfortunatley, a Discord account can only be linked once.");
+        .setDescription("This Discord is already associated with a Steam account. Unfortunately, a Discord account can only be linked once.");
 
         if(json.token == "Already Registered"){
             return interaction.reply({embeds: [embed]});
         }
 
-        embed = new EmbedBuilder()
-        .setTitle("Verification Alert")
-        .setDescription(`Hello ${interaction.user}\n\nA requirement of this server is that each user must link their Discord with a Steam account. Don't worry though, this process won't take up much of your time.\n\nOnce you're ready to get started, click the button below.`);
+        var resp = buildAuthMessage(json.token, config.epochTime, interaction.user);
 
-        const row = new ActionRowBuilder();
-        row.addComponents(new ButtonBuilder()
-        .setLabel("Verify Me")
-        .setStyle(ButtonStyle.Link)
-        .setURL(`https://steamlink.vercel.app/index.html?token=${json.token}`)
-        );
-
-        return interaction.reply({embeds: [embed], components: [row], ephemeral: true});
+        return interaction.reply(resp);
     })
     .catch(err => console.log(err))
     

@@ -1,4 +1,7 @@
 package com.tategreeves.webservice.Repository;
 
-public class ServerConfigRepository {
+import com.tategreeves.webservice.Model.ServerConfig;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface ServerConfigRepository extends MongoRepository<ServerConfig, Long> {
 }

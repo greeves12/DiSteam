@@ -1,7 +1,10 @@
-const {Client, IntentsBitField, Collection, REST, Routes, ActivityType, EmbedBuilder} = require('discord.js');
+const {Client, IntentsBitField, Collection, REST, Routes, ActivityType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
 require('dotenv').config();
 const fetch = require('node-fetch');
 const fs = require('fs');
+
+
+module.exports = {buildAuthMessage, fetchServerConfig};
 
 const client = new Client({
     intents: [
@@ -14,7 +17,6 @@ const client = new Client({
 });
 
 let guilds = [];
-let guildConfigs = new Map();
 
 const commandFiles = fs.readdirSync("./Commands").filter(file => file.endsWith(".js"));
 client.commands = new Collection();
@@ -31,10 +33,13 @@ const rest = new REST().setToken(process.env.TOKEN);
 
 client.once("ready", () => {
     client.user.setActivity({
-        name: "Connected to the mainframe",
+        name: "Monitoring Members",
         type: ActivityType.Custom
     });
 
+    client.guilds.fetch();
+    guilds = client.guilds.cache.map(g => g.id);
+    client.guilds.cache.forEach(g => scraper(g.id));
 
     (async () => {
         try {
@@ -49,7 +54,7 @@ client.once("ready", () => {
 });
 
 client.on("guildCreate", async (guild) => {
-    var owner = await guild.fetchOwner();
+    var owner = await guild.fetchOwner().then(fetchServerConfig(guild.id, guild.ownerId));
     await guild.members.fetch();
 
     var embed = new EmbedBuilder()
@@ -60,20 +65,7 @@ client.on("guildCreate", async (guild) => {
 
     guilds.push(guild.id);
 
-    fetch('https://steam-auth-bot-production.up.railway.app/config/get', {
-        method: 'POST',
-        body: JSON.stringify({
-            server_id: parseInt(guild.id, 10)
-        }),
-        headers: { 
-            'Content-type': 'application/json; charset=UTF-8',
-             api_key: process.env.API_KEY,  
-        }, 
-    })
-    .then((response) => response.json())
-    .then((json) => {
-        guildConfigs.set(guild.id, json);
-    });
+
 });
 
 client.on("guildDelete", async (guild) => {
@@ -102,6 +94,105 @@ client.on("interactionCreate", async interaction => {
     }
 });
 
+client.on("guildMemberAdd", async (member) => {
+    var json = createFetchPlayer(member.id);
+    var config = fetchServerConfig(member.guild.id, member.guild.ownerId);
+    var requiredTime = config.epochTime;
+    var accountAge = json.ageOfAccount;
+
+    
+    if(JSON.stringify(json) !== "{}"){
+        if(accountAge < requiredTime){
+            //Account is less than server required account age
+        }
+    }
+
+    var authToken = fetchAuthToken(member.id);
+
+    
+    member.send(buildAuthMessage(authToken, requiredTime, member.user));
+});
+
+function fetchAuthToken(discordId){
+    return new Promise((resolve) => {
+            fetch(process.env.TOKEN_LINK, { 
+                method: 'POST', 
+                body: JSON.stringify({ 
+                    discord_id: parseInt(discordId,10)
+            }), 
+            headers: { 
+                'Content-type': 'application/json; charset=UTF-8',
+                'api_key': process.env.API_KEY,  
+            }, 
+        }) 
+        .then((response) => response.json()) 
+        .then((json) => {
+            resolve(json);
+        });
+    });
+}
+
+function createFetchPlayer(discordID){
+    return new Promise((resolve) => {
+        fetch(process.env.MEMBER_LINK, {
+            method: "POST",
+            body: JSON.stringify({
+                discord_id: parseInt(member.id, 10)
+            }),
+            headers: {
+                'api_key': process.env.API_KEY,
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            resolve(json);
+        });
+
+    });
+}
+
+function fetchServerConfig(serverId, ownerId){
+    return new Promise((resolve) => {
+        fetch(process.env.CONFIG_LINK, {
+            method: 'POST',
+            body: JSON.stringify({
+                server_id: parseInt(serverId, 10),
+                owner_id: parseInt(ownerId, 10)
+            }),
+            headers: { 
+                'Content-type': 'application/json; charset=UTF-8',
+                'api_key': process.env.API_KEY,  
+            }, 
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            resolve(json);
+        });
+    });
+}
+
+function buildAuthMessage(token, requiredTime, memberName){
+    var currentDate = new Date().valueOf();
+    var res = Math.abs(requiredTime);
+    var difference = Math.floor(res / 86400);
+    
+
+    embed = new EmbedBuilder()
+        .setTitle("Verification Alert")
+        .setDescription(`Hello ${memberName}\n\nThis server is connected to the DiSteam Network. The server owner has outlined a few requirements to have full access to the server:
+        \n-You must authenticate your Steam Account\n-Your Steam account must be ${difference} days old.\n\nRegards,\nThe DiSteam Team`);
+
+        const row = new ActionRowBuilder();
+        row.addComponents(new ButtonBuilder()
+        .setLabel("Authenticate Me")
+        .setStyle(ButtonStyle.Link)
+        .setURL(`https://steamlink.vercel.app/index.html?token=${token}`)
+    );
+
+    return({embeds: [embed], components: [row], ephemeral: true});
+}
+
 client.login(process.env.TOKEN);
 
 function sleep(ms) {
@@ -110,7 +201,8 @@ function sleep(ms) {
 
 async function scraper(guildId){
     while(guilds.includes(guildId)){
-        console.log(guildId);
-        sleep(5000);
+        
+        await sleep(50000);
     }
 }
+
