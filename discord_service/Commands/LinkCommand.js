@@ -1,7 +1,8 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
+const { EmbedBuilder} = require('discord.js');
 const fetch = require('node-fetch');
-const {buildAuthMessage, fetchServerConfig} = require('../index');
+const { fetchServerConfig} = require('../Http/Requests');
+const {buildAuthMessage} = require('../Utilities/MessageBuilder');
 require('dotenv').config();
 
 /*
@@ -36,7 +37,7 @@ module.exports = {
         .setDescription("This Discord is already associated with a Steam account. Unfortunately, a Discord account can only be linked once.");
 
         if(json.token == "Already Registered"){
-            return interaction.reply({embeds: [embed]});
+            return interaction.reply({embeds: [embed], ephemeral: true});
         }
 
         var resp = buildAuthMessage(json.token, config.epochTime, interaction.user);
