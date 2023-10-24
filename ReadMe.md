@@ -77,9 +77,9 @@ The official repository of the DiSteam Network.
 DiSteam helps you maintain your server by mitigating cheating and smurfing (alternate accounts) by requiring members to authenticate their Steam with a Discord account. The main advantage that DiSteam gives server owners is that we act as a middle man, which means that each Discord server DiSteam is running on is connected through our central database. This means that a member only has to authenticate their Steam account once and they will be verified across the whole network. 
 
 Still not convinced? Here are some more reasons to use DiSteam:
-* DiSteam is highly flexiable and configureable, which means you can customize the service speicifically to your needs.
+* DiSteam is highly flexible and configurable, which means you can customize the service specifically to your needs.
 * You have access to the analytical dashboard, this gives you an insight to players who've been banned on other servers on the network.
-* Plug and play. You don't need a sophetiscated computer science background to use DiSteam. Just connect us to your server and sit back and relax while we take care of the administrating for you.
+* Plug and play. You don't need a sophisticated computer science background to use DiSteam. Just connect us to your server and sit back and relax while we take care of the administrating for you.
 
 So, are you ready to take your server to the next level? Head over to our website for detailed instructions on how to get setup.
 
@@ -140,18 +140,18 @@ Project Link: [https://github.com/greeves12/DiSteam](https://github.com/greeves1
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[contributors-shield]: https://img.shields.io/github/contributors/greeves12/DiSteam.svg?style=for-the-badge
+[contributors-url]: https://github.com/greeves12/DiSteam/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/greeves12/DiSteam.svg?style=for-the-badge
+[forks-url]: https://github.com/greeves12/DiSteam/network/members
+[stars-shield]: https://img.shields.io/github/stars/greeves12/DiSteam.svg?style=for-the-badge
+[stars-url]: https://github.com/greeves12/DiSteam/stargazers
+[issues-shield]: https://img.shields.io/github/issues/greeves12/DiSteam.svg?style=for-the-badge
+[issues-url]: https://github.com/greeves12/DiSteam/issues
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
+[linkedin-url]: www.linkedin.com/in/tate-greeves-082723225
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
