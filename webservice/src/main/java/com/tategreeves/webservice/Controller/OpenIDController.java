@@ -50,8 +50,12 @@ public class OpenIDController {
 
             OpenIdManager manager = new OpenIdManager();
 
-            manager.setRealm("https://steam-auth-bot-production.up.railway.app/openid");
-            manager.setReturnTo("https://steam-auth-bot-production.up.railway.app/openid?login=verify");
+          //  manager.setRealm("https://steam-auth-bot-production.up.railway.app/openid");
+            //manager.setReturnTo("https://steam-auth-bot-production.up.railway.app/openid?login=verify");
+
+            manager.setRealm("http://localhost:8080/openid");
+            manager.setReturnTo("http://localhost:8080/openid?login=verify");
+
 
             Endpoint endpoint = manager.lookupEndpoint("https://steamcommunity.com/openid");
             System.out.println(endpoint);
