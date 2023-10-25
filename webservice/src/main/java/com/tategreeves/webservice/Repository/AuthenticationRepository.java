@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.Optional;
 
-public interface AuthenticationRepository extends MongoRepository<Token, Long> {
+public interface AuthenticationRepository extends MongoRepository<Token, String> {
 
     @Query("{ token: ?0 }")
     boolean tokenExists(String token);

@@ -9,10 +9,10 @@ import java.util.HashMap;
 @Document(collection = "users")
 public class User {
     @Id
-    private long discord_id;
+    private String discord_id;
     private LocalDateTime time_verified;
-    private long steam_id;
-    private HashMap<Long, Integer> bans;
+    private String steam_id;
+    private HashMap<String, Integer> bans;
     private String steam_name;
     private long ageOfAccount;
 
@@ -32,11 +32,11 @@ public class User {
         return steam_name;
     }
 
-    public long getDiscord_id() {
+    public String getDiscord_id() {
         return discord_id;
     }
 
-    public void setDiscord_id(long discord_id) {
+    public void setDiscord_id(String discord_id) {
         this.discord_id = discord_id;
     }
 
@@ -48,19 +48,19 @@ public class User {
         this.time_verified = time_verified;
     }
 
-    public long getSteam_id() {
+    public String getSteam_id() {
         return steam_id;
     }
 
-    public void setSteam_id(long steam_id) {
+    public void setSteam_id(String steam_id) {
         this.steam_id = steam_id;
     }
 
-    public HashMap<Long, Integer> getBans() {
+    public HashMap<String, Integer> getBans() {
         return bans;
     }
 
-    public void setBans(HashMap<Long, Integer> bans) {
+    public void setBans(HashMap<String, Integer> bans) {
         this.bans = bans;
     }
 }
