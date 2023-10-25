@@ -69,7 +69,7 @@ function fetchServerConfig(serverId, ownerId){
                 method: 'POST',
                 headers :{
                 'Content-type': 'application/json; charset=UTF-8',
-                'api_key': process.env.API_KEY, 
+                'api_key': process.env.API_KEY,
                 },
             })
             .then((response) => response.json())
@@ -80,6 +80,9 @@ function fetchServerConfig(serverId, ownerId){
 function deleteToken(discordId){
     fetch(process.env.TOKEN_LINK + "/delete", {
         method: 'POST',
+        body: JSON.stringify({
+            discord_id: discordId
+        }),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
             'api_key': process.env.API_KEY, 

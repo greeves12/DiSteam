@@ -1,7 +1,9 @@
 package com.tategreeves.webservice.Service;
 
 import com.tategreeves.webservice.Model.Token;
+import com.tategreeves.webservice.Model.User;
 import com.tategreeves.webservice.Repository.AuthenticationRepository;
+import com.tategreeves.webservice.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +18,28 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationRepository repository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     /*
-    * Name: getToken
-    * @param token - Token object
-    * @return - An updated Token object
-    * */
-    public Token getToken(Token token){
-        Optional<Token> token1 = repository.findById(token.getDiscord_iD());
+     * Name: getToken
+     * @param token - Token object
+     * @return - An updated Token object
+     * */
+    public Token getToken(Token token) {
+        Optional<User> token1 = userRepository.findById(token.getDiscord_iD());
 
-        if(token1.isPresent()){
-            if(token1.get().isVerified()){
-                Token val = token1.get();
-                val.setToken("Already Registered");
+        if (token1.isPresent()) {
+            Token val = new Token(token.getDiscord_iD());
+            val.setToken("Already Registered");
 
-                return val;
-            }
-            return token1.get();
+            return val;
+        }
+
+        Optional<Token> tok = repository.findById(token.getDiscord_iD());
+
+        if(tok.isPresent()){
+            return tok.get();
         }
 
         String uuid = UUID.randomUUID().toString();

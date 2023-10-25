@@ -20,5 +20,6 @@ async function botJoin(guild){
 
     owner.send({embeds: [embed], rows: [row]});
 
+
     addGuild(guild.id);
 }
