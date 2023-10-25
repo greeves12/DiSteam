@@ -6,27 +6,37 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.UUID;
 
 @Document(collection = "config")
 public class ServerConfig {
     @Id
-    private long server_id;
-    private long owner_id;
+    private String server_id;
+    private String owner_id;
+    private String uuid;
 
-    public long getOwner_id() {
+    public String getOwner_id() {
         return owner_id;
     }
 
-    public void setOwner_id(long owner_id) {
+    public void setOwner_id(String owner_id) {
         this.owner_id = owner_id;
     }
 
-    private List<Long> on_join_role;
-    private List<Long> verified_role;
+    private List<String> on_join_role;
+    private List<String> verified_role;
     private long epoch_time;
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUUID(String uuid){
+        this.uuid = uuid;
+    }
+
     @JsonCreator
-    public ServerConfig(@JsonProperty("server_id") long server_id, @JsonProperty("owner_id") long owner_id, @JsonProperty("on_join_role") List<Long> on_join_role, @JsonProperty("verified_role") List<Long> verified_role, @JsonProperty("epoch_time") long epoch_time) {
+    public ServerConfig(@JsonProperty("server_id") String server_id, @JsonProperty("owner_id") String owner_id, @JsonProperty("on_join_role") List<String> on_join_role, @JsonProperty("verified_role") List<String> verified_role, @JsonProperty("epoch_time") long epoch_time) {
         this.server_id = server_id;
         this.verified_role = verified_role;
         this.on_join_role = on_join_role;
@@ -34,27 +44,27 @@ public class ServerConfig {
         this.epoch_time = epoch_time;
     }
 
-    public long getServer_id() {
+    public String getServer_id() {
         return server_id;
     }
 
-    public void setServer_id(long server_id) {
+    public void setServer_id(String server_id) {
         this.server_id = server_id;
     }
 
-    public List<Long> get_join_role() {
+    public List<String> get_join_role() {
         return on_join_role;
     }
 
-    public void set_join_role(List<Long> on_join_role) {
+    public void set_join_role(List<String> on_join_role) {
         this.on_join_role = on_join_role;
     }
 
-    public List<Long> getVerified_role() {
+    public List<String> getVerified_role() {
         return verified_role;
     }
 
-    public void setVerified_role(List<Long> verified_role) {
+    public void setVerified_role(List<String> verified_role) {
         this.verified_role = verified_role;
     }
 

@@ -2,10 +2,13 @@ const {Client, IntentsBitField, Collection, REST, Routes, ActivityType, EmbedBui
 require('dotenv').config();
 const fetch = require('node-fetch');
 const fs = require('fs');
+const {autoPromote} = require('./API/WebScraper');
 
 const {onJoin} = require('./Events/MemberJoin');
 const {botJoin} = require('./Events/BotJoin');
 const {onBotLeave} = require('./Events/BotLeave');
+
+const {addGuild, getGuilds} = require('./API/Guilds');
 
 
 const client = new Client({
@@ -32,6 +35,7 @@ for (const file of commandFiles){
 const rest = new REST().setToken(process.env.TOKEN);
 
 
+
 client.once("ready", () => {
     client.user.setActivity({
         name: "Monitoring Members",
@@ -39,8 +43,10 @@ client.once("ready", () => {
     });
 
     client.guilds.fetch();
-    guilds = client.guilds.cache.map(g => g.id);
-    client.guilds.cache.forEach(g => scraper(g.id));
+    client.guilds.cache.forEach((g) => addGuild(g.id));
+    
+    
+    autoPromote(client);
 
     (async () => {
         try {
@@ -85,15 +91,4 @@ client.on("guildMemberAdd", async (member) => {
 
 
 client.login(process.env.TOKEN);
-
-function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function scraper(guildId){
-    while(guilds.includes(guildId)){
-        
-        await sleep(50000);
-    }
-}
 

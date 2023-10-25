@@ -1,4 +1,4 @@
-const {ActionRowBuilder, ButtonBuilder, EmbedBuilder} = require('discord.js');
+const {ActionRowBuilder, ButtonBuilder, EmbedBuilder, ButtonStyle} = require('discord.js');
 
 module.exports = {buildAuthMessage};
 
@@ -11,7 +11,7 @@ function buildAuthMessage(token, requiredTime, memberName){
     embed = new EmbedBuilder()
         .setTitle("Verification Alert")
         .setDescription(`Hello ${memberName}\n\nThis server is connected to the DiSteam Network. The server owner has outlined a few requirements to have full access to the server:
-        \n-You must authenticate your Steam Account\n-Your Steam account must be ${difference} days old.\n\nRegards,\nThe DiSteam Team`);
+        \n1. You must authenticate your Steam Account\n2. Steam account must be ${difference} days old.\n\nRegards,\nThe DiSteam Team`);
 
         const row = new ActionRowBuilder();
         row.addComponents(new ButtonBuilder()

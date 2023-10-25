@@ -15,6 +15,7 @@ public class ServerConfigController {
 
     @PostMapping("/config/get")
     public ServerConfig createConfig(@RequestBody ServerConfig config){
+
         return service.getConfig(config.getServer_id(), config.getOwner_id());
     }
 }

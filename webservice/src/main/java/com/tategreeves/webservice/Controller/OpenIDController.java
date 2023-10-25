@@ -86,7 +86,7 @@ public class OpenIDController {
             response.setContentType("text/html; charset=UTF-8");
 
 
-            long steamID = Long.parseLong(identity.substring(37));
+            String steamID = identity.substring(37);
             String tok = (String) session.getAttribute("token");
 
             //Perform lookup in the database to ensure the token is valid and pairs wih a discord id
@@ -97,7 +97,7 @@ public class OpenIDController {
                 return;
             }
 
-            long discordID = newToken.get().getDiscord_iD();
+            String discordID = newToken.get().getDiscord_iD();
 
             //Perform steam api lookup. Returns a JSON object defined as PlayerInformation.
             URL url = new URL("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+steamkey+"&steamids="+steamID);

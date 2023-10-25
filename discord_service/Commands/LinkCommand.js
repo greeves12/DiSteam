@@ -21,7 +21,7 @@ module.exports = {
         fetch(process.env.TOKEN_LINK, { 
             method: 'POST', 
             body: JSON.stringify({ 
-                discord_id: parseInt(interaction.user.id,10)
+                discord_id: interaction.user.id
         }), 
         headers: { 
             'Content-type': 'application/json; charset=UTF-8',

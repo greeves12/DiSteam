@@ -10,21 +10,21 @@ import java.time.LocalDateTime;
 @Document(collection = "authentication")
 public class Token {
     @Id
-    private long discord_id;
+    private String discord_id;
     private String token;
     private boolean verified;
 
 
     @JsonCreator
-    public Token(@JsonProperty("discord_id") long discord_id) {
+    public Token(@JsonProperty("discord_id") String discord_id) {
         this.discord_id = discord_id;
     }
 
-    public long getDiscord_iD() {
+    public String getDiscord_iD() {
         return discord_id;
     }
 
-    public void setDiscord_iD(long discord_iD) {
+    public void setDiscord_iD(String discord_iD) {
         this.discord_id = discord_iD;
     }
 
