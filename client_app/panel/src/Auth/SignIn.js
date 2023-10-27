@@ -1,22 +1,11 @@
-import Nav from "../Navigation/Nav";
-
 const logo =  require('../Assets/logo.png');
 const {FaDiscord} = require('react-icons/fa');
-const {Navigate} = require('react-router-dom');
 
 const Signin = () => {
-    let link:string = "https://discord.com/api/oauth2/authorize?client_id=1167234227339792414&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fauth&response_type=code&scope=identify%20email%20guilds";
+    let link = "https://discord.com/api/oauth2/authorize?client_id=1167234227339792414&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fauth&response_type=code&scope=identify%20email%20guilds";
 
     let params = new URLSearchParams(document.location.search);
 
-    const loggedIn = params.has("code");
-
-    if (loggedIn){
-        let client_id = process.env.REACT_APP_CLIENT_ID;
-        let secret = process.env.REACT_APP_CLIENT_SECRET;
-
-        return <h1> {client_id}</h1>
-    }
 
     return(
 
