@@ -1,11 +1,13 @@
 import Axios from 'axios';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import logo from '../Assets/logo.png'
 import ServerCard from "../Contents/ServerCard";
+import {DiscordContext} from "../App";
 
 const Success = () => {
     const [discord, setDiscord] = useState("");
     const [option, setOption] = useState("Dashboard");
+    const [servers, setServers] = useState([]);
 
     let params = new URLSearchParams(window.location.search);
     let access = params.get("access_token");
@@ -18,9 +20,22 @@ const Success = () => {
             }
         }).then((res) => {
             setDiscord(res.data);
+
         });
+        if(servers.length === 0) {
+            Axios.get("https://discord.com/api/users/@me/guilds", {
+                headers: {
+                    authorization: `${type} ${access}`
+                }
+            }).then((res) => {
+                setServers(res.data);
+            });
+        }
     }, []);
-    console.log(discord);
+
+
+
+    console.log(servers);
 
     const buttonData = [
         "Dashboard",
@@ -39,15 +54,18 @@ const Success = () => {
 
             {/* Server container */}
             <div className={'text-white absolute w-[900px] h-[200px] left-[400px] top-8'}>
-                <h1 className={'font-semibold text-3xl pb-3'}>Servers</h1>
+                <h1 className={'font-semibold text-3xl pb-3'}>Servers List</h1>
                 <h2 className={'max-w-full text-[20px] pb-20 text-gray-300'}>We can't wait to get DiSteam setup on your server.</h2>
 
                 <h1 className={'text-white text-[22px] font-bold top-0 pb-8'}>My Servers</h1>
-                <div className={'flex gap-10 '}>
-                    <ServerCard
-                        imgUrl={`https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png`}
-                        serverName={"FraggersCord"}/>
-                    <ServerCard />
+                <div className={'flex gap-10 flex-wrap'}>
+
+                    {servers.map((prop) => prop.owner ? <ServerCard
+                        imgUrl={`https://cdn.discordapp.com/icons/${prop.id}/${prop.icon}.png`}
+                        serverName={prop.name}
+                        serverId={prop.id}
+                    /> : null)}
+
                 </div>
             </div>
 
