@@ -2,27 +2,38 @@ import Axios from 'axios';
 import {useContext, useEffect, useState} from "react";
 import logo from '../Assets/logo.png'
 import ServerCard from "../Contents/ServerCard";
-import {DiscordContext} from "../App";
+import NavPanel from "../Features/Applications/NavPanel";
 
-const Success = () => {
-    const [discord, setDiscord] = useState("");
-    const [option, setOption] = useState("Dashboard");
-    const [servers, setServers] = useState([]);
-
-    let params = new URLSearchParams(window.location.search);
-    let access = params.get("access_token");
-    let type = params.get("token_type");
+const Success = ({ GlobalState }) => {
+    const {discord, setDiscord, servers, setServers} = GlobalState;
 
     useEffect(() => {
-        Axios.get("https://discord.com/api/users/@me", {
-            headers:{
-                authorization: `${type} ${access}`
-            }
-        }).then((res) => {
-            setDiscord(res.data);
+        if (discord === "") {
+            let params = new URLSearchParams(window.location.search);
+            let type = "";
+            let access = "";
 
-        });
-        if(servers.length === 0) {
+            if(localStorage.getItem("api") !== null){
+                let json = JSON.parse(localStorage.getItem("api"));
+
+                type = json["type"];
+                access = json["access"];
+            }else{
+                 access = params.get("access_token");
+                 type = params.get("token_type");
+                 localStorage.setItem("api", JSON.stringify({access: access, type: type}))
+
+            }
+
+            Axios.get("https://discord.com/api/users/@me", {
+                headers: {
+                    authorization: `${type} ${access}`
+                }
+            }).then((res) => {
+                setDiscord(res.data);
+
+            });
+
             Axios.get("https://discord.com/api/users/@me/guilds", {
                 headers: {
                     authorization: `${type} ${access}`
@@ -34,8 +45,13 @@ const Success = () => {
     }, []);
 
 
+    const getServerIcon = (icon, id) => {
+        if(icon === null){
+            return null;
+        }
 
-    console.log(servers);
+        return `https://cdn.discordapp.com/icons/${id}/${icon}.png`;
+    }
 
     const buttonData = [
         "Dashboard",
@@ -61,7 +77,7 @@ const Success = () => {
                 <div className={'flex gap-10 flex-wrap'}>
 
                     {servers.map((prop) => prop.owner ? <ServerCard
-                        imgUrl={`https://cdn.discordapp.com/icons/${prop.id}/${prop.icon}.png`}
+                        imgUrl={getServerIcon(prop.icon, prop.id)}
                         serverName={prop.name}
                         serverId={prop.id}
                     /> : null)}
@@ -70,19 +86,7 @@ const Success = () => {
             </div>
 
             {/* Left panel */}
-            <div className='bg-[#383838] min-h-screen w-[300px] text-white'>
-                <img src={logo} alt={""} className='flex ml-4 m-auto p-5'/>
-
-                <div className='flex ml-11 mt-3'>
-                    <ol >
-                        {buttonData.map((name) =>
-                            <li className={'mb-6'}>
-                                <button className={`${option === name ? 'bg-indigo-600 py-2 pl-6 pr-32 rounded-md text-left' : 'ml-6'}`} onClick={() => {setOption(name)}}>{name}</button>
-                            </li>
-                        )}
-                    </ol>
-                </div>
-            </div>
+            <NavPanel buttonData={buttonData} option={"Dashboard"} />
 
         </div>
     )
