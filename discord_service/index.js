@@ -61,11 +61,11 @@ client.once("ready", () => {
 });
 
 client.on("guildCreate", async (guild) => {
-    botJoin(guild);
+    await botJoin(guild);
 });
 
 client.on("guildDelete", async (guild) => {
-    onBotLeave(guild);
+    await onBotLeave(guild);
 });
 
 client.on("interactionCreate", async interaction => {
@@ -86,7 +86,7 @@ client.on("interactionCreate", async interaction => {
 });
 
 client.on("guildMemberAdd", async (member) => {
-    onJoin(member);
+    await onJoin(member);
 });
 
 
