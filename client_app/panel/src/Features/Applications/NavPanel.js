@@ -2,7 +2,7 @@ import logo from "../../Assets/logo.png";
 
 const NavPanel = (props) => {
     return(
-        <div className='bg-[#383838] min-h-screen w-[300px] text-white'>
+        <div className='bg-[#383838] min-h-screen w-[320px] text-white'>
             <img src={logo} alt={""} className='flex ml-4 m-auto p-5'/>
 
             <div className='flex ml-11 mt-3 text-gray-400'>

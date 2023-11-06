@@ -1,8 +1,7 @@
 import Axios from 'axios';
 import {useContext, useEffect, useState} from "react";
-import logo from '../Assets/logo.png'
-import ServerCard from "../Contents/ServerCard";
-import NavPanel from "../Features/Applications/NavPanel";
+import ServerCard from "../Server/ServerCard";
+import NavPanel from "../../Features/Applications/NavPanel";
 
 const Success = ({ GlobalState }) => {
     const {discord, setDiscord, servers, setServers} = GlobalState;
@@ -12,16 +11,19 @@ const Success = ({ GlobalState }) => {
             let params = new URLSearchParams(window.location.search);
             let type = "";
             let access = "";
+            let auth = "";
 
             if(localStorage.getItem("api") !== null){
                 let json = JSON.parse(localStorage.getItem("api"));
 
                 type = json["type"];
                 access = json["access"];
+                auth = json["auth"];
             }else{
                  access = params.get("access_token");
                  type = params.get("token_type");
-                 localStorage.setItem("api", JSON.stringify({access: access, type: type}))
+                 auth = params.get("auth");
+                 localStorage.setItem("api", JSON.stringify({access: access, type: type, auth: auth}))
 
             }
 
@@ -31,7 +33,7 @@ const Success = ({ GlobalState }) => {
                 }
             }).then((res) => {
                 setDiscord(res.data);
-
+                localStorage.setItem("discord_id", discord.id);
             });
 
             Axios.get("https://discord.com/api/users/@me/guilds", {

@@ -2,7 +2,8 @@ module.exports = {createFetchPlayer, fetchAuthToken, fetchServerConfig, fetchVer
 
 function fetchAuthToken(discordId){
     return new Promise((resolve) => {
-            fetch(process.env.TOKEN_LINK, { 
+
+            fetch(process.env.LINK + "/auth", {
                 method: 'POST', 
                 body: JSON.stringify({ 
                     discord_id: discordId
@@ -21,7 +22,7 @@ function fetchAuthToken(discordId){
 
 function createFetchPlayer(discordID){
     return new Promise((resolve) => {
-        fetch(process.env.MEMBER_LINK, {
+        fetch(process.env.LINK + "/members/get", {
             method: "POST",
             body: JSON.stringify({
                 discord_id: discordID
@@ -41,7 +42,7 @@ function createFetchPlayer(discordID){
 
 function fetchServerConfig(serverId, ownerId){
     return new Promise((resolve) => {
-        fetch(process.env.CONFIG_LINK, {
+        fetch(process.env.LINK + "/config/get", {
             method: 'POST',
             body: JSON.stringify({
                 server_id: serverId,
@@ -65,7 +66,7 @@ function fetchServerConfig(serverId, ownerId){
      */
     function fetchVerifiedAccounts(){
         return new Promise((resolve) => {
-            fetch(process.env.TOKEN_LINK + "/verified", {
+            fetch(process.env.LINK + "/auth/verified", {
                 method: 'POST',
                 headers :{
                 'Content-type': 'application/json; charset=UTF-8',
@@ -78,7 +79,7 @@ function fetchServerConfig(serverId, ownerId){
     }
 
 function deleteToken(discordId){
-    fetch(process.env.TOKEN_LINK + "/delete", {
+    fetch(process.env.LINK + "/auth/delete", {
         method: 'POST',
         body: JSON.stringify({
             discord_id: discordId

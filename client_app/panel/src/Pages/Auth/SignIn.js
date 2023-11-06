@@ -1,4 +1,4 @@
-const logo =  require('../Assets/logo.png');
+const logo =  require('../../Assets/logo.png');
 const {FaDiscord} = require('react-icons/fa');
 
 const Signin = () => {

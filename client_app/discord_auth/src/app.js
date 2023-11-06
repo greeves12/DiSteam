@@ -20,7 +20,22 @@ app.get('/auth', async (req, res) => {
         const response= await axios.post('https://discord.com/api/oauth2/token',params)
         const { access_token,token_type}=response.data;
 
-        return res.redirect("http://localhost:3000/success?access_token=" + access_token + "&token_type=" + token_type);
+        const {id} = (await axios.get("https://discord.com/api/users/@me", {
+            headers: {
+                authorization: `${token_type} ${access_token}`
+            }
+        })).data;
+
+        const {token} = (await axios.request({
+            method: "post",
+            url: "http://localhost:8080/service/requests/post/auth/access",
+            headers: {
+                'api-key': process.env.API,
+                'discord-id': id
+            },
+        })).data;
+
+        return res.redirect("http://localhost:3000/success?access_token=" + access_token + "&token_type=" + token_type + "&auth=" + token);
     }catch(error){
         console.log('Error',error)
         return res.send('Some error occurred! ')

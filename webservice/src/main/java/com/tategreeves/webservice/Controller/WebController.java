@@ -6,7 +6,12 @@ import com.tategreeves.webservice.Service.PanelService;
 import com.tategreeves.webservice.Service.ServerConfigService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 public class WebController {
@@ -16,11 +21,16 @@ public class WebController {
     @Autowired
     private ServerConfigService serverConfigService;
 
+    @Value("${api.key}")
+    private String apiKey;
+
 
     @GetMapping("/service/requests/get/config")
     public ServerConfig getConfig(@RequestHeader("discord-id") String discord_id, @RequestHeader("auth-token") String authToken, HttpServletResponse response, @RequestHeader("server-id") String serverId){
+        System.out.println("f");
         Panel client = new Panel(discord_id);
         client.setAuth_token(authToken);
+
 
         if(!authentication.tokenExists(client)){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -41,5 +51,18 @@ public class WebController {
         }
 
         serverConfigService.updateConfig(config);
+    }
+
+
+    @PostMapping("/service/requests/post/auth/access")
+    public Map<String, String> getToken(@RequestHeader("discord-id") String discordId, @RequestHeader("api-key") String apiKey, HttpServletResponse response){
+        if(!this.apiKey.equals(apiKey)){
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        }
+
+        Panel client = authentication.getUserAuthToken(discordId);
+
+        return Collections.singletonMap("token", client.getAuth_token());
     }
 }
