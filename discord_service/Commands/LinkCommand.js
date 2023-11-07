@@ -17,8 +17,8 @@ module.exports = {
     .setName("link")
     .setDescription("Link your Steam with Discord"),
     async execute (interaction){
-        var config = await fetchServerConfig(interaction.guild.id, interaction.guild.ownerId);
-        fetch(process.env.TOKEN_LINK, { 
+        const config = await fetchServerConfig(interaction.guild.id, interaction.guild.ownerId);
+        fetch(process.env.LINK + "/auth", {
             method: 'POST', 
             body: JSON.stringify({ 
                 discord_id: interaction.user.id
@@ -30,18 +30,15 @@ module.exports = {
     }) 
     .then((response) => response.json()) 
     .then((json) => {
-        var message = "This Discord has already been registered with a Steam account.";
+        const embed = new EmbedBuilder()
+            .setTitle("Sorry...")
+            .setDescription("This Discord is already associated with a Steam account. Unfortunately, a Discord account can only be linked once.");
 
-        var embed = new EmbedBuilder()
-        .setTitle("Sorry...")
-        .setDescription("This Discord is already associated with a Steam account. Unfortunately, a Discord account can only be linked once.");
-
-        if(json.token == "Already Registered"){
+        if(json.token === "Already Registered"){
             return interaction.reply({embeds: [embed], ephemeral: true});
         }
 
-        var resp = buildAuthMessage(json.token, config.epochTime, interaction.user);
-
+        const resp = buildAuthMessage(json.token, config.epochTime, interaction.user);
         return interaction.reply(resp);
     })
     .catch(err => console.log(err))

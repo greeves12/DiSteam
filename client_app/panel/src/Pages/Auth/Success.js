@@ -1,28 +1,31 @@
 import Axios from 'axios';
-import {useContext, useEffect, useState} from "react";
-import logo from '../Assets/logo.png'
-import ServerCard from "../Contents/ServerCard";
-import NavPanel from "../Features/Applications/NavPanel";
+import {useEffect, useState} from "react";
+import ServerCard from "../Server/ServerCard";
+import NavPanel from "../../Features/Applications/NavPanel";
 
-const Success = ({ GlobalState }) => {
-    const {discord, setDiscord, servers, setServers} = GlobalState;
+const Success = () => {
+    const [discord, setDiscord] = useState({});
+    const [servers, setServers] = useState([]);
 
     useEffect(() => {
-        if (discord === "") {
+
+        if (Object.keys(discord).length === 0) {
             let params = new URLSearchParams(window.location.search);
             let type = "";
             let access = "";
+            let auth = "";
 
-            if(localStorage.getItem("api") !== null){
+            if(params.has("auth")){
+                access = params.get("access_token");
+                type = params.get("token_type");
+                auth = params.get("auth");
+
+                localStorage.setItem("api", JSON.stringify({access: access, type: type, auth: auth}));
+            }else{
                 let json = JSON.parse(localStorage.getItem("api"));
 
                 type = json["type"];
                 access = json["access"];
-            }else{
-                 access = params.get("access_token");
-                 type = params.get("token_type");
-                 localStorage.setItem("api", JSON.stringify({access: access, type: type}))
-
             }
 
             Axios.get("https://discord.com/api/users/@me", {
@@ -31,7 +34,7 @@ const Success = ({ GlobalState }) => {
                 }
             }).then((res) => {
                 setDiscord(res.data);
-
+                localStorage.setItem("discord_id", res.data.id);
             });
 
             Axios.get("https://discord.com/api/users/@me/guilds", {
@@ -42,7 +45,7 @@ const Success = ({ GlobalState }) => {
                 setServers(res.data);
             });
         }
-    }, []);
+    }, [discord]);
 
 
     const getServerIcon = (icon, id) => {

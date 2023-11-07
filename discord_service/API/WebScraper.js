@@ -27,9 +27,7 @@ async function autoPromote(client){
                 const promoteRoles = configJson.verified_role;
                 const removeRoles = configJson._join_role;
 
-                if(promoteRoles.length !== 0){
-                    return;
-                }
+
 
                 for(let x = 0; x < accounts.length; x++){
                     if(guildMembers.has(accounts[x])){

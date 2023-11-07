@@ -30,6 +30,14 @@ public class PanelService {
     public boolean tokenExists(Panel client){
         Optional<Panel> result = repository.findById(client.getDiscord_id());
 
-        return result.isPresent() && result.get().getAuth_token().equals(client.getAuth_token());
+        if(result.isEmpty()){
+            return false;
+        }
+
+        if(!result.get().getAuth_token().equals(client.getAuth_token())){
+            return false;
+        }
+
+        return true;
     }
 }

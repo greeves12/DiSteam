@@ -1,7 +1,10 @@
 package com.tategreeves.webservice.Model;
 
+import org.springframework.data.annotation.Id;
+
 public class Panel {
 
+    @Id
     private String discord_id;
     private String auth_token;
 

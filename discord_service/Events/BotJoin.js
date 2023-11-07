@@ -5,20 +5,20 @@ const {EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('di
 module.exports = {botJoin};
 
 async function botJoin(guild){
-    var owner = await guild.fetchOwner().then(fetchServerConfig(guild.id, guild.ownerId));
+    const owner = await guild.fetchOwner().then(fetchServerConfig(guild.id, guild.ownerId));
     await guild.members.fetch();
 
-    var embed = new EmbedBuilder()
-    .setTitle("Thank you for inviting me to your server.")
-    .setDescription("Currently, you are running the default configurations for this server. We strongly recommend that you head over to the client portal" +
-    "to customize the bot to your server's needs.");
+    const embed = new EmbedBuilder()
+        .setTitle("Thank you for inviting me to your server.")
+        .setDescription("If this is your first time using our service, you will have to configure a few options. You can do so by clicking the button below and logging" +
+            "in through your Discord account.");
     const row = new ActionRowBuilder();
         row.addComponents(new ButtonBuilder()
         .setLabel("Client Panel")
         .setStyle(ButtonStyle.Link)
         .setURL("https://panel.disteam.com"));
 
-    owner.send({embeds: [embed], rows: [row]});
+    owner.send({embeds: [embed], components: [row]});
 
 
     addGuild(guild.id);

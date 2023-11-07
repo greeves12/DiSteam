@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Route, Routes} from "react-router-dom";
-import SignIn from "./Auth/SignIn";
-import Success from "./Auth/Success";
-import Server from "./Contents/Server";
+import SignIn from "./Pages/Auth/SignIn";
+import Success from "./Pages/Auth/Success";
+import Server from "./Pages/Server/Server";
 
   const App = () => {
 
@@ -19,8 +19,8 @@ import Server from "./Contents/Server";
               <Routes>
                   <Route path={"/"} element={<SignIn  />}/>
                   <Route path={"/auth"} element={<SignIn />} />
-                  <Route path={"/success"} element={<Success GlobalState={GlobalState}/>} />
-                  <Route path={"/server/:id"} element={<Server />}/>
+                  <Route path={"/success"} element={<Success/>} />
+                  <Route path={"/server/:id"} element={<Server/>}/>
               </Routes>
             </div>
         );
