@@ -15,6 +15,8 @@ public class ServerConfig {
     private String owner_id;
     private String uuid;
 
+    private String server_name;
+
     public String getOwner_id() {
         return owner_id;
     }

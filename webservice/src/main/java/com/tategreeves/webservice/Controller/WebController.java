@@ -8,11 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+@CrossOrigin(origins = "*", exposedHeaders =  {"*"})
 @RestController
 public class WebController {
     @Autowired
@@ -27,12 +29,12 @@ public class WebController {
 
     @GetMapping("/service/requests/get/config")
     public ServerConfig getConfig(@RequestHeader("discord-id") String discord_id, @RequestHeader("auth-token") String authToken, HttpServletResponse response, @RequestHeader("server-id") String serverId){
-        System.out.println("f");
         Panel client = new Panel(discord_id);
         client.setAuth_token(authToken);
 
 
         if(!authentication.tokenExists(client)){
+            System.out.println("f");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return null;
         }

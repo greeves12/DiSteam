@@ -19,8 +19,8 @@ import Server from "./Pages/Server/Server";
               <Routes>
                   <Route path={"/"} element={<SignIn  />}/>
                   <Route path={"/auth"} element={<SignIn />} />
-                  <Route path={"/success"} element={<Success GlobalState={GlobalState}/>} />
-                  <Route path={"/server/:id"} element={<Server GlobalState={{GlobalState}}/>}/>
+                  <Route path={"/success"} element={<Success/>} />
+                  <Route path={"/server/:id"} element={<Server/>}/>
               </Routes>
             </div>
         );
